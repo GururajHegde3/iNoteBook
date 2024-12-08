@@ -63,39 +63,23 @@ router.put('/updatenote/:id',fetchuser, async (req,res)=>{
   res.json({note})
 
 })
-//route for deleting node 
-router.delete('/deletenote/:id',fetchuser, async (req,res)=>{
-  try{
-  
-  const newnote={}
-  if(description){
-    newnote.description=description
-  };
-  if(title){
-    newnote.title=title
-  };
-  if(tag){
-    newnote.title=tag
-  };
+router.delete('/deletenote/:id', fetchuser, async (req, res) => {
+  try {
+      // Find the note to be delete and delete it
+      let note = await Notes.findById(req.params.id);
+      if (!note) { return res.status(404).send("Not Found") }
 
-  let note= await Notes.findByIdAndUpdate(req.params.id)
-  if(!note){
-    res.status(400).send('Error')
-  }
-  if(note.user.toString() !== req.user.id){
-    res.status(401).send("not allowed")
-  }
-  note = await Notes.findByIdAndDelete(req.params.id,{$set:newnote},{new:true})
-  res.send("note has been deleted")
+      // Allow deletion only if user owns this Note
+      if (note.user.toString() !== req.user.id) {
+          return res.status(401).send("Not Allowed");
+      }
 
-}
-catch (error) {
-  if (error.code === 11000) {
-    return res.status(400).json({ error: 'Email already exists' });
+      note = await Notes.findByIdAndDelete(req.params.id)
+      res.json({ "Success": "Note has been deleted", note: note });
+  } catch (error) {
+      console.error(error.message);
+      res.status(500).send("Internal Server Error");
   }
-  console.error(error);
-  res.status(500).json({ error: 'Server error' });
-}
 })
 
 

@@ -5,6 +5,9 @@ import Nav from './components/Nav';
 import NoteState from './context/notes/NoteState';
 import About from './components/About';
 
+import Alert from './components/Alert';
+
+
 import {
   BrowserRouter as Router,
   Route,
@@ -20,6 +23,7 @@ function App() {
     <Router>
     
         <Nav/>
+        <Alert message={"Nice One"}/>
         <div className='container'>
         <Routes>
           <Route  path="/" element={<Home />}/>
