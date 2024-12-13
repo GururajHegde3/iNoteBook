@@ -49,7 +49,7 @@ router.put('/updatenote/:id',fetchuser, async (req,res)=>{
     newnote.title=title
   };
   if(tag){
-    newnote.title=tag
+    newnote.tag=tag
   };
 
   let note= await Notes.findByIdAndUpdate(req.params.id)

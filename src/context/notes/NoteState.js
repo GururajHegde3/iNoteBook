@@ -12,7 +12,7 @@ const NoteState=(props)=>{
         
         headers: {
           'content-type':'application/json',
-          'auth-token': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjc0ZGM3YzgzN2IxYzMxMDU4MGJkZWE0In0sImlhdCI6MTczMzE1MDY5Nn0.GNYO3PBHqEB4Md__hkRY1EYyh4GP1a9pPjKwSF8xBi0',
+          'auth-token': localStorage.getItem('token'),
         },
       });
       const json=await response.json();
@@ -26,26 +26,16 @@ const NoteState=(props)=>{
     //Add Note
     const addNote=async (title,description,tag)=>{
       const response = await fetch(`${host}/api/notes/addnote`, {
-        method: "POST",
+        method: "PUT",
         
         headers: {
           'content-type':'application/json',
-          'auth-token': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjczMzQyMTVkODMxNWIzNjU4ODVhYzVkIn0sImlhdCI6MTczMTQ5MDA0N30.6FrYLjV3F0GA-m7XNNESxlFYHRTzCE5kz6myEeB-Bic',
+          'auth-token': localStorage.getItem('token'),
         },
         body: JSON.stringify({title,description,tag}),});
-       const json=response.json();
-
-      console.log("addig new note")
-      const note={
-        "user": "674dc7c837b1c310580bdea4",
-        "title": title,
-        "description": description,
-        "tag": "GD",
-        "_id": "674dc9d37767353632f57fd9",
-        "date": "2024-12-02T14:53:07.173Z",
-        "__v": 0
-      };
+       const note=response.json()
        setNotes(notes.concat(note));
+     
 
     }
     const deleteNote=async (id)=>{
@@ -54,7 +44,7 @@ const NoteState=(props)=>{
         
         headers: {
           'content-type':'application/json',
-          'auth-token': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjczMzQyMTVkODMxNWIzNjU4ODVhYzVkIn0sImlhdCI6MTczMTQ5MDA0N30.6FrYLjV3F0GA-m7XNNESxlFYHRTzCE5kz6myEeB-Bic',
+          'auth-token': localStorage.getItem('token'),
         }
       });
       const json=response.json();
@@ -66,24 +56,30 @@ const NoteState=(props)=>{
         
     const editNote=async (id,title,description,tag)=>{
       const response = await fetch(`${host}/api/notes/updatenote/${id}`, {
-        method: "POST",
+        method: "PUT",
         
         headers: {
           'content-type':'application/json',
-          'auth-token': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjczMzQyMTVkODMxNWIzNjU4ODVhYzVkIn0sImlhdCI6MTczMTQ5MDA0N30.6FrYLjV3F0GA-m7XNNESxlFYHRTzCE5kz6myEeB-Bic',
+          'auth-token': localStorage.getItem('token'),
         },
         body: JSON.stringify({title,description,tag}),});
       const json=response.json();
+      console.log(json);
 
-      for (let index = 0; index < notes.length; index++) {
-        const element = notes[index];
+      let newNotes=JSON.parse(JSON.stringify(notes))
+
+      for (let index = 0; index < newNotes.length; index++) {
+        const element = newNotes[index];
         if(element._id===id){
-          element.title=title;
-          element.description=description;
-          element.tag=tag;
+          newNotes[index].title=title;
+          newNotes[index].description=description;
+          newNotes[index].tag=tag;
+          break;
         }
         
+        
       }
+      setNotes(newNotes);
       
     }
         

@@ -11,6 +11,11 @@ function Nav() {
     console.log(location);
 
   },[location]);
+ 
+  const handleLogout=()=>{
+    localStorage.removeItem('token');
+    window.location.href="/login";
+  }
 
   return (
     <div>
@@ -30,10 +35,10 @@ function Nav() {
         </li>
     
       </ul>
-      <form class="d-flex" role="search">
-        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search"/>
-        <button class="btn btn-outline-success" type="submit">Search</button>
-      </form>
+    {!localStorage.getItem('token')? <form class="d-flex" role="search">
+      <Link class="btn btn-primary mx-2" to="/login" role="button">Login</Link>
+      <Link class="btn btn-primary" to="/signup" role="button">Sign up</Link>
+      </form>:<button onClick={handleLogout} className='btn btn-primary'>Logout</button>}
     </div>
   </div>
 </nav>
