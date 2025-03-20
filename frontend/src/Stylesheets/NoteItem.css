@@ -1,0 +1,39 @@
+/* NoteItem.css */
+
+.card {
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1); /* Default shadow */
+    border-radius: 12px;
+    background-color: #ffffff;
+    border: 1px solid #ddd;
+  }
+  
+  .card:hover {
+    transform: translateY(-5px); /* Slight lift on hover */
+    box-shadow: 0 16px 24px rgba(0, 0, 0, 0.2); /* Enhanced shadow on hover */
+  }
+  
+  .card-title {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-weight: bold;
+    color: #333;
+  }
+  
+  .card-text {
+    white-space: pre-wrap;
+    word-break: break-word;
+    font-size: 0.9rem;
+    color: #666;
+  }
+  
+  .card-body {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .card-body .d-flex {
+    margin-top: 15px;
+  }
+  

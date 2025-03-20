@@ -110,16 +110,27 @@ const onChange=(e)=>{
   </div>
 </div>
     <div className="row my-3">
-     
-    <h2>Your Notes</h2>
-    <div className="container mx-2">
-    {notes.length===0 &&  'No Notes to Display' }
+    <h2 className="my-4 text-center">Your Notes</h2>
+
+<div className="container">
+  {notes.length === 0 ? (
+    <div className="text-center text-muted my-4">
+      <p>No notes to display</p>
     </div>
-   {notes.map((note) => {
-      
-       return <NoteItem key={note._id} updateNote={updateNote} showAlert={props.showAlert} note={note}/>
-    
-})}
+  ) : (
+    <div className="row">
+      {notes.map((note) => (
+        <NoteItem
+          key={note._id}
+          updateNote={updateNote}
+          showAlert={props.showAlert}
+          note={note}
+        />
+      ))}
+    </div>
+  )}
+</div>
+
   </div>
   </>
   )
