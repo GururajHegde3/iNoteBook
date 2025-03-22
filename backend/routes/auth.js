@@ -3,7 +3,7 @@ const User = require("../models/User");
 const router = express.Router();
 var bcrypt = require('bcryptjs');
 var jwt=require('jsonwebtoken');
-const JWT_SECRET='welcome';
+
 const fetchuser =require("../middleware/fetchuser")
 const { body, validationResult } = require('express-validator');
 
@@ -34,7 +34,7 @@ router.post('/createuser', [
         id:user.id
       }
     }
-     const authtoken=jwt.sign(data,JWT_SECRET)
+     const authtoken=jwt.sign(data,process.env.JWT_SECRET)
      success=true;
     res.json({success,authtoken});
   } catch (error) {
@@ -75,7 +75,7 @@ router.post('/login', [
       id:user.id
     }
   }
-   const authtoken = jwt.sign(data,JWT_SECRET)
+   const authtoken = jwt.sign(data,process.env.JWT_SECRET)
    success=true;
   res.json({success,authtoken});
 }
