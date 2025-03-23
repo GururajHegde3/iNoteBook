@@ -26,7 +26,7 @@ const NoteState=(props)=>{
     //Add Note
     const addNote=async (title,description,tag)=>{
       const response = await fetch(`${host}/api/notes/addnote`, {
-        method: "PUT",
+        method: "POST",
         
         headers: {
           'content-type':'application/json',
