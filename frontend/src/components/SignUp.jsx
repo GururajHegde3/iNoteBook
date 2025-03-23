@@ -9,7 +9,7 @@ const SignUp = (props) => {
      const {name,email,password,cpassword}=credentials;
       e.preventDefault();
       try {
-        const response = await fetch('http://localhost:5000/api/auth/createuser', {
+        const response = await fetch('https://inotebook-4a3x.onrender.com/api/auth/createuser', {
          
           method: 'POST',
           headers: {
